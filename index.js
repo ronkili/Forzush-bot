@@ -1681,39 +1681,66 @@ function buildStaffExamEmbeds() {
 
 
 // =====================
+// VERIFY — ZONE X STYLE
+// =====================
+
+function verifyPanel() {
+  const embed = new EmbedBuilder()
+    .setColor("Blue")
+    .setTitle("✅ Verify • Forzush")
+    .setDescription(
+      [
+        "ברוכים הבאים לשרת!",
+        "",
+        "לחצו על הכפתור **Verify** כדי להתחיל את האימות.",
+        "הבוט יציג לכם מספר בן 4 ספרות וכמה כפתורים.",
+        "לחצו על הכפתור עם המספר הנכון כדי לקבל את רול ה־Member.",
+        "",
+        "🔐 האימות אישי ורק מי שהתחיל אותו יכול להשלים אותו."
+      ].join("\n")
+    )
+    .setFooter({
+      text: "Forzush • Verification System"
+    })
+    .setTimestamp();
+
+  const row = new ActionRowBuilder()
+    .addComponents(
+      new ButtonBuilder()
+        .setCustomId("start_verify")
+        .setLabel("Verify")
+        .setEmoji("✅")
+        .setStyle(ButtonStyle.Success)
+    );
+
+  return {
+    embeds: [embed],
+    components: [row]
+  };
+}
+
+// =====================
 // TICKETS
 // =====================
 
 const ticketTypes = {
+  management_support: {
+    emoji: "📌",
+    name: "Management Support",
+    hebrewName: "פנייה להנהלה",
+    description: "פנייה פרטית וישירה לצוות ההנהלה"
+  },
+  general_help: {
+    emoji: "💬",
+    name: "General Help",
+    hebrewName: "עזרה כללית",
+    description: "עזרה כללית, שאלות ותמיכה בשרת"
+  },
   report_user: {
     emoji: "🚨",
     name: "Report User",
     hebrewName: "דיווח על משתמש",
     description: "דיווח על משתמש שעובר על חוקי השרת"
-  },
-  management_support: {
-    emoji: "📋",
-    name: "Management Support",
-    hebrewName: "פנייה להנהלה",
-    description: "פנייה ישירה לצוות ההנהלה"
-  },
-  giveaway_winner: {
-    emoji: "🎁",
-    name: "Giveaway Winner",
-    hebrewName: "זכייה בהגרלה",
-    description: "פנייה בנוגע לזכייה בהגרלה"
-  },
-  video_participation: {
-    emoji: "🎬",
-    name: "Video Participation",
-    hebrewName: "השתתפות בסרטון",
-    description: "בקשה להשתתף בסרטון"
-  },
-  other: {
-    emoji: "❓",
-    name: "Other",
-    hebrewName: "אחר",
-    description: "נושא אחר שלא מופיע ברשימה"
   },
   staff_test: {
     emoji: "📝",
@@ -1724,63 +1751,27 @@ const ticketTypes = {
 };
 
 function ticketPanel() {
-  const regularTypes = [
-    "report_user",
-    "management_support",
-    "giveaway_winner",
-    "video_participation",
-    "other"
-  ];
-
-  const select = new StringSelectMenuBuilder()
-    .setCustomId("ticket_type_select")
-    .setPlaceholder("בחר נושא לפתיחת טיקט")
-    .addOptions(
-      regularTypes.map(value => {
-        const data = ticketTypes[value];
-
-        return new StringSelectMenuOptionBuilder()
-          .setLabel(data.name)
-          .setDescription(data.hebrewName)
-          .setEmoji(data.emoji)
-          .setValue(value);
-      })
-    );
-
-  const description = [
-    "🎟️ **צריכים עזרה? הגעתם למקום הנכון.**",
-    "",
-    "כדי לפתוח פנייה לצוות, בחרו מהתפריט למטה את הנושא שהכי מתאים לפנייה שלכם.",
-    "לאחר הבחירה ייפתח עבורכם טיקט פרטי שבו תוכלו להסביר את המקרה בצורה מלאה.",
-    "",
-    "📌 **נושאים זמינים**",
-    "",
-    "🚨 **Report User**",
-    "דיווח על משתמש שעובר על חוקי השרת.",
-    "",
-    "📋 **Management Support**",
-    "פנייה ישירה להנהלה בנושא שדורש טיפול או עזרה.",
-    "",
-    "🎁 **Giveaway Winner**",
-    "פנייה בנוגע לזכייה בהגרלה או קבלת הפרס.",
-    "",
-    "🎬 **Video Participation**",
-    "בקשה להשתתף בסרטון או פעילות תוכן של השרת.",
-    "",
-    "❓ **Other**",
-    "לכל נושא אחר שלא מתאים לאחת האפשרויות למעלה.",
-    "",
-    "⚠️ **שימו לב**",
-    "יש לפתוח טיקט רק כשבאמת צריך עזרה ולפרט את הנושא בצורה מסודרת.",
-    "פתיחת טיקטים ללא סיבה או ספאם עלולה להוביל לסגירת הטיקט ולטיפול מצד הצוות.",
-    "",
-    "💙 צוות Forzush יחזור אליכם בהקדם האפשרי."
-  ].join("\n");
-
   const embed = new EmbedBuilder()
     .setColor("Blurple")
-    .setTitle("🎟️ מרכז תמיכה — פתיחת טיקט")
-    .setDescription(description)
+    .setTitle("🎟️ מרכז התמיכה של Forzush")
+    .setDescription(
+      [
+        "בחרו את סוג הפנייה שמתאים לכם באמצעות הכפתורים למטה.",
+        "",
+        "📌 **פנייה להנהלה**",
+        "לנושאים פרטיים, חשובים או כאלה שדורשים טיפול ישיר של ההנהלה.",
+        "",
+        "💬 **עזרה כללית**",
+        "לשאלות, עזרה בשרת, תמיכה והכוונה כללית.",
+        "",
+        "🚨 **דיווח על משתמש**",
+        "לדיווח על משתמש שעובר על החוקים או מפריע בשרת.",
+        "",
+        "לאחר הלחיצה ייפתח עבורכם טיקט פרטי והצוות יגיע אליכם בהקדם.",
+        "",
+        "⚠️ יש לפתוח טיקט רק כשבאמת צריך עזרה."
+      ].join("\n")
+    )
     .setFooter({
       text: "Forzush • Premium Support Center"
     })
@@ -1794,14 +1785,33 @@ function ticketPanel() {
     );
   }
 
+  const row = new ActionRowBuilder()
+    .addComponents(
+      new ButtonBuilder()
+        .setCustomId("ticket_open:management_support")
+        .setLabel("פנייה להנהלה")
+        .setEmoji("📌")
+        .setStyle(ButtonStyle.Primary),
+
+      new ButtonBuilder()
+        .setCustomId("ticket_open:general_help")
+        .setLabel("עזרה כללית")
+        .setEmoji("💬")
+        .setStyle(ButtonStyle.Primary),
+
+      new ButtonBuilder()
+        .setCustomId("ticket_open:report_user")
+        .setLabel("דיווח על משתמש")
+        .setEmoji("🚨")
+        .setStyle(ButtonStyle.Primary)
+    );
+
   return {
     embeds: [embed],
-    components: [
-      new ActionRowBuilder()
-        .addComponents(select)
-    ]
+    components: [row]
   };
 }
+
 function staffApplicationPanel() {
   const button =
     new ButtonBuilder()
@@ -2884,15 +2894,26 @@ client.on(
         );
       }
 
-      // ---------- TICKET TYPE ----------
+      // ---------- TICKET CATEGORY BUTTONS ----------
 
       if (
-        interaction.isStringSelectMenu() &&
-        interaction.customId === "ticket_type_select"
+        interaction.isButton() &&
+        interaction.customId.startsWith("ticket_open:")
       ) {
+        const ticketType =
+          interaction.customId.split(":")[1];
+
+        if (!ticketTypes[ticketType]) {
+          return interaction.reply({
+            content:
+              "❌ קטגוריית הטיקט הזאת לא קיימת.",
+            flags: MessageFlags.Ephemeral
+          });
+        }
+
         return openTicket(
           interaction,
-          interaction.values[0]
+          ticketType
         );
       }
 
@@ -2976,6 +2997,207 @@ client.on(
           content:
             `✅ ${member} הוסר מהטיקט.`,
           flags: MessageFlags.Ephemeral
+        });
+      }
+
+      // ---------- VERIFY BUTTONS ----------
+
+      if (
+        interaction.isButton() &&
+        interaction.customId === "start_verify"
+      ) {
+        if (!config.memberRoleId) {
+          return interaction.reply({
+            content:
+              "❌ חסר `memberRoleId` ב־config.js.",
+            flags: MessageFlags.Ephemeral
+          });
+        }
+
+        if (
+          interaction.member?.roles?.cache?.has(
+            config.memberRoleId
+          )
+        ) {
+          return interaction.reply({
+            content:
+              "✅ אתה כבר מאומת ויש לך את רול ה־Member.",
+            flags: MessageFlags.Ephemeral
+          });
+        }
+
+        const correct =
+          String(
+            Math.floor(
+              1000 +
+              Math.random() * 9000
+            )
+          );
+
+        const numbers =
+          new Set([correct]);
+
+        while (numbers.size < 4) {
+          numbers.add(
+            String(
+              Math.floor(
+                1000 +
+                Math.random() * 9000
+              )
+            )
+          );
+        }
+
+        const shuffled =
+          [...numbers]
+            .sort(
+              () =>
+                Math.random() - 0.5
+            );
+
+        const row =
+          new ActionRowBuilder()
+            .addComponents(
+              shuffled.map(number =>
+                new ButtonBuilder()
+                  .setCustomId(
+                    `verify:${interaction.user.id}:${correct}:${number}`
+                  )
+                  .setLabel(number)
+                  .setStyle(
+                    ButtonStyle.Secondary
+                  )
+              )
+            );
+
+        return interaction.reply({
+          content:
+            `🔢 המספר שלך הוא: **${correct}**\n` +
+            "לחץ על הכפתור עם המספר הזה.",
+          components: [row],
+          flags: MessageFlags.Ephemeral
+        });
+      }
+
+      if (
+        interaction.isButton() &&
+        interaction.customId.startsWith("verify:")
+      ) {
+        const [
+          ,
+          verifyUserId,
+          correct,
+          picked
+        ] =
+          interaction.customId.split(":");
+
+        if (
+          interaction.user.id !==
+          verifyUserId
+        ) {
+          return interaction.reply({
+            content:
+              "❌ זה לא ה־Verify שלך.",
+            flags: MessageFlags.Ephemeral
+          });
+        }
+
+        if (picked !== correct) {
+          return interaction.update({
+            content:
+              "❌ המספר לא נכון. לחץ שוב על Verify והתחל מחדש.",
+            components: []
+          });
+        }
+
+        const member =
+          await interaction.guild.members
+            .fetch(
+              interaction.user.id
+            )
+            .catch(() => null);
+
+        const botMember =
+          await interaction.guild.members
+            .fetchMe()
+            .catch(() => null);
+
+        const role =
+          await interaction.guild.roles
+            .fetch(
+              config.memberRoleId
+            )
+            .catch(() => null);
+
+        if (!member || !botMember) {
+          return interaction.update({
+            content:
+              "❌ לא הצלחתי לטעון את נתוני המשתמש או הבוט.",
+            components: []
+          });
+        }
+
+        if (!role) {
+          return interaction.update({
+            content:
+              "❌ האימות הצליח, אבל לא מצאתי את רול ה־Member. בדוק `memberRoleId` ב־config.js.",
+            components: []
+          });
+        }
+
+        if (role.managed) {
+          return interaction.update({
+            content:
+              "❌ רול ה־Member שהוגדר הוא Managed Role ואי אפשר לתת אותו ידנית.",
+            components: []
+          });
+        }
+
+        if (
+          !botMember.permissions.has(
+            PermissionFlagsBits.ManageRoles
+          )
+        ) {
+          return interaction.update({
+            content:
+              "❌ לבוט אין הרשאת `Manage Roles`.",
+            components: []
+          });
+        }
+
+        if (
+          role.position >=
+          botMember.roles.highest.position
+        ) {
+          return interaction.update({
+            content:
+              "❌ רול הבוט נמוך מדי. העלה את רול Forzush מעל רול ה־Member.",
+            components: []
+          });
+        }
+
+        try {
+          await member.roles.add(
+            role,
+            "Forzush Verify completed"
+          );
+        } catch (error) {
+          console.error(
+            "❌ Verify role add error:",
+            error
+          );
+
+          return interaction.update({
+            content:
+              "❌ האימות הצליח אבל לא הצלחתי לתת את הרול.",
+            components: []
+          });
+        }
+
+        return interaction.update({
+          content:
+            "✅ אומתת בהצלחה! קיבלת את רול ה־Member.",
+          components: []
         });
       }
 
@@ -3357,6 +3579,39 @@ client.on(
             `🏓 **Pong!**\n` +
             `🤖 Bot: **${responseMs}ms**\n` +
             `🌐 Discord WS: **${client.ws.ping}ms**`,
+          flags: MessageFlags.Ephemeral
+        });
+      }
+
+      if (interaction.commandName === "verify-panel") {
+        if (
+          !canSendSetupPanels(
+            interaction.member,
+            interaction.guild
+          )
+        ) {
+          return interaction.reply({
+            content:
+              "❌ אין לך גישה. צריך Staff, Manage Server, Administrator או להיות Owner של השרת.",
+            flags: MessageFlags.Ephemeral
+          });
+        }
+
+        if (!interaction.channel?.isTextBased()) {
+          return interaction.reply({
+            content:
+              "❌ אפשר לשלוח Verify Panel רק בחדר טקסט.",
+            flags: MessageFlags.Ephemeral
+          });
+        }
+
+        await interaction.channel.send(
+          verifyPanel()
+        );
+
+        return interaction.reply({
+          content:
+            "✅ פאנל ה־Verify נשלח.",
           flags: MessageFlags.Ephemeral
         });
       }
