@@ -69,6 +69,10 @@ const commands = [
 
 
   new SlashCommandBuilder()
+    .setName("verify-panel")
+    .setDescription("שולח את פאנל ה־Verify של Forzush"),
+
+  new SlashCommandBuilder()
     .setName("ticket-panel")
     .setDescription("שולח את מרכז התמיכה המתקדם של Forzush"),
 
