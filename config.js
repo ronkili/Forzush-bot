@@ -39,7 +39,7 @@ module.exports = {
   staffTestTicketRoleId: "1549410021178351667",
 
   // Ticket close logs + transcripts.
-  ticketLogsChannelId: ""1550135817698156595,
+  ticketLogsChannelId: "1550135817698156595",
 
   // =====================
   // WELCOME
