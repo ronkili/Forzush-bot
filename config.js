@@ -7,6 +7,13 @@ module.exports = {
   guildId: "1542452776607555674",
 
   // =====================
+  // VERIFY
+  // =====================
+
+  // הרול שמקבלים אחרי Verify
+  memberRoleId: "1542459113517220031",
+
+  // =====================
   // STAFF
   // =====================
 
@@ -46,9 +53,6 @@ module.exports = {
   // =====================
 
   // Optional fixed welcome channel.
-  // Leave "" and the bot will try:
-  // welcome / welcomes / ברוכים-הבאים
-  // then the server System Channel.
   welcomeChannelId: "1542452777316384791",
 
   // =====================
